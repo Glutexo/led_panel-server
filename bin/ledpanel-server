@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 require 'ledpanel'
 
-server = Ledpanel::Server.new
+server = Ledpanel::Server.new 9999
 server.run
