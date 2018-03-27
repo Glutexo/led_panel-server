@@ -5,10 +5,12 @@ require 'bunny'
 module LEDPanel
   class Client
 
+    # Create a new, uninitialized connection.
     def initialize
       @connection = Connection.new
     end
 
+    # Run the client: Listen for messages.
     def run
       @connection.queue do |queue|
         puts("Client started. Listening on queue “#{queue.name}”.")

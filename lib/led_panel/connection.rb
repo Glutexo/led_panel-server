@@ -6,7 +6,7 @@ module LEDPanel
       @connection = Bunny.new
     end
 
-    # Open a connection, set up a queue, do work, close the connection.
+    # Open a connection, set up a channel/queue, do work, close the connection.
     def queue
       @connection.start
 

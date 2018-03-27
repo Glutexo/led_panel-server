@@ -3,12 +3,13 @@ require 'json'
 
 module LEDPanel
   class Server
+
     # Create a new, uninitialized connection.
     def initialize
       @connection = Connection.new
     end
 
-    # Run the server.
+    # Run the server: Broadcast messages from $stdin.
     def run
       @connection.queue do |queue|
         puts("Server started. Broadcasting to queue: “#{queue.name}”.")
