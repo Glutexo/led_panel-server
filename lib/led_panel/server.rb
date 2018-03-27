@@ -1,7 +1,7 @@
 require 'socket'
 require 'json'
 
-module Ledpanel
+module LEDPanel
   class Server
 
     def initialize(port)
