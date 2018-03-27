@@ -10,12 +10,12 @@ module LEDPanel
 
     # Run the server.
     def run
-      @connection.queue do |channel, queue|
+      @connection.queue do |queue|
         puts("Server started. Broadcasting to queue: “#{queue.name}”.")
 
         loop do
           message = $stdin.gets.chomp
-          channel.default_exchange.publish(message.to_json, routing_key: queue.name)
+          queue.broadcast(message.to_json)
         rescue Interrupt
           return
         end

@@ -10,10 +10,8 @@ module LEDPanel
     def queue
       @connection.start
 
-      channel = @connection.create_channel
-      queue = channel.queue(QUEUE_NAME)
-
-      yield(channel, queue)
+      queue = Queue.new(@connection)
+      yield(queue)
 
       @connection.close
     end

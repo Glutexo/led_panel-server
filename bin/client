@@ -10,17 +10,18 @@ module LEDPanel
     end
 
     def run
-      @connection.queue do |channel, queue|
+      @connection.queue do |queue|
         puts("Client started. Listening on queue “#{queue.name}”.")
         begin
-          queue.subscribe(block: true) do |delivery_info, properties, body|
-            puts(body)
-          end
+          queue.listen do |message|
+            puts(message)
+            end
         rescue Interrupt
           return
         end
       end
     end
+
   end
 end
 
