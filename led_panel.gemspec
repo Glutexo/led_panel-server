@@ -10,4 +10,6 @@ Gem::Specification.new do |s|
   s.files       = ['lib/led_panel.rb', 'lib/led_panel/server.rb']
   s.homepage    = 'http://rubygems.org/gems/led_panel-server'
   s.license     = 'MIT'
+
+  s.add_runtime_dependency('bunny', '~> 2.9.2')
 end

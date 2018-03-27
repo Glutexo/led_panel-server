@@ -1,30 +1,37 @@
-require 'socket'
+require 'bunny'
 require 'json'
 
 module LEDPanel
   class Server
-
-    def initialize(port)
-      @server = TCPServer.new port
-      @client = nil
+    # Create a new, uninitialized connection.
+    def initialize
+      @connection = Bunny.new
     end
 
     # Run the server.
     def run
-      serve
-    end
+      with_connection do |con|
+        channel = con.create_channel
+        queue = channel.queue(QUEUE_NAME)
 
-    # Handle incomming connection: send a hello message and close.
-    def serve
-      loop do
-        @client = @server.accept
-        @client.puts 'Hello!'
+        puts("Server started. Broadcasting to queue: “#{queue.name}”.")
         loop do
-          msg = $stdin.gets.chomp
-          @client.print(msg.to_json + "\n")
-          # @TODO Detect if client closes the connection.
+          message = $stdin.gets.chomp
+          channel.default_exchange.publish(message.to_json, routing_key: queue.name)
+        rescue Interrupt
+          return
         end
       end
     end
+
+    private
+
+      # Open a connection, do work, close the connection.
+      def with_connection
+        @connection.start
+        yield(@connection)
+        @connection.close
+      end
+
   end
 end
