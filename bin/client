@@ -6,16 +6,11 @@ module LEDPanel
   class Client
 
     def initialize
-      @connection = Bunny.new
+      @connection = Connection.new
     end
 
     def run
-      with_connection do |con|
-        channel = con.create_channel
-
-        # Create the queue here as well – ensure that it exists
-        queue = channel.queue(LEDPanel::QUEUE_NAME)
-
+      @connection.queue do |channel, queue|
         puts("Client started. Listening on queue “#{queue.name}”.")
         begin
           queue.subscribe(block: true) do |delivery_info, properties, body|
@@ -26,15 +21,6 @@ module LEDPanel
         end
       end
     end
-
-    private
-
-      def with_connection
-        @connection.start
-        yield(@connection)
-        @connection.close
-      end
-
   end
 end
 

@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = 'A server for Glutexo’s MAX7219 LED panel.'
   s.authors     = ['Glutexo']
   s.email       = 'glutexo@icloud.com'
-  s.files       = ['lib/led_panel.rb', 'lib/led_panel/server.rb']
+  s.files       = ['lib/led_panel.rb', 'lib/led_panel/connection.rb', 'lib/led_panel/server.rb']
   s.homepage    = 'http://rubygems.org/gems/led_panel-server'
   s.license     = 'MIT'
 
